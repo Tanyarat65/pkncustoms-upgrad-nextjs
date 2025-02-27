@@ -11,9 +11,8 @@ export default function Articles() {
   return (
     <>
       <Header />
-      <div className="container mx-auto py-12">
+      <div className="container mx-auto pt-32 py-12">
         <h1 className="text-4xl font-bold text-center mb-6">All Articles</h1>
-        <Link href="/" className="text-blue-600 hover:text-blue-800">Back to Home</Link>
       </div>
       <div id="article-section" className="py-1 px-10 grid gap-8 lg:grid-cols-4 md:grid-cols-2 md:gap-4 sm:grid-cols-1">
         {articles

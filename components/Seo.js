@@ -8,6 +8,9 @@ export default function SEO({ title, description, keywords, image, url }) {
       <meta name="keywords" content={keywords} />
       <meta name="author" content="PKN Customs Services" />
 
+      {/* Google */}
+      <meta name="google-site-verification" content="AJjzUgDtpXFNzbdVqW7nWZOqVTV-BSEFaj7zWeMveEA" />
+
       {/* Open Graph (OG) for Facebook */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />

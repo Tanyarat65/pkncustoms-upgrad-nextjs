@@ -14,9 +14,9 @@ export default function Home() {
       <SEO 
         title="PKN Customs Services | นำเข้า-ส่งออกและโลจิสติกส์ครบวงจร" 
         description="PKN Customs ให้บริการนำเข้า-ส่งออก ขนส่งสินค้า ศุลกากร ใบอนุญาต และที่ปรึกษาโดยผู้เชี่ยวชาญมากกว่า 18 ปี"
-        keywords="นำเข้า, ส่งออก, ขนส่ง, ศุลกากร, PKN Customs, ใบอนุญาต, โลจิสติกส์"
+        keywords="นำเข้า, ส่งออก, นำเข้าส่งออก, ขนส่ง, ศุลกากร, pkncustoms, ใบอนุญาต, โลจิสติกส์"
         image="/images/Logo.jpg"
-        url="https://pkncustomsservices.com"
+        url="https://pkncustoms.onrender.com"
       />
       <Header />
       <main className="">

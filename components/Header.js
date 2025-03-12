@@ -1,12 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import  Link from "next/link";
+
+//ฟังชั่นแปลจาก react-i18next (ผ่าน next-i18next)
+import { useTranslation } from 'react-i18next';
+// ใช้ Lucide Icons
+import { Languages } from "lucide-react";
+
+import i18n from "../lib/i18n";
+import next from "next";
+
 
 const Header = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  
+  const { t } = useTranslation('common'); // ✅ ใช้ namespace 'common'
   const router = useRouter();
+
+  const [isMounted, setIsMounted] = useState(false); // ✅ สร้าง state สำหรับตรวจสอบว่า component ถูก mount หรือยัง
+  
+  useEffect(() => {
+    setIsMounted(true); // ✅ กำหนดค่าเป็น true เมื่อ component ถูก mount
+  }, []); // ✅ ใช้ useEffect กำหนดค่าเมื่อ component ถูก mount
+
+  // ✅ ฟังก์ชันสำหรับเปลี่ยนภาษา
+  const toggleLanguage = () => {
+    const nextLocale = i18n.language === 'en' ? 'th' : 'en';
+    i18n.changeLanguage(nextLocale); // ✅ เปลี่ยนภาษาใน i18next
+
+    // ✅ ใช้ Next.js Router เพื่ออัปเดต URL และ locale
+    router.push(router.pathname, router.pathname, { locale: nextLocale });
+  }
+
+  if (!isMounted) return null; // ✅ แก้ไข Hydration Error
+
+  console.log("📌 Current language:", i18n.language); // ✅ ตรวจสอบว่าภาษาเปลี่ยนหรือไม่
 
   return (
     <header className="bg-white shadow-md fixed w-full z-50">
@@ -19,13 +49,20 @@ const Header = () => {
 
         {/* Desktop Menu */}
         <nav className="hidden lg:flex space-x-6">
-          <div onClick={() => router.push('/#home-section')} className="hover:text-blue-500">Home</div>
-          <div onClick={() => router.push('/#services-section')} className="hover:text-blue-500">Services</div>
-          <div onClick={() => router.push('/#about-section')} className="hover:text-blue-500">About Us</div>
-          <div onClick={() => router.push('/#why-us-section')} className="hover:text-blue-500">Why Us</div>
-          <div onClick={() => router.push('/#article-section')} className="hover:text-blue-500">Article</div>
-          <div onClick={() => router.push('/#contact-section')} className="hover:text-blue-500">Contact</div>
+          <div onClick={() => router.push('/#home-section')} className="hover:text-blue-500">{t("home")}</div>
+          <div onClick={() => router.push('/#services-section')} className="hover:text-blue-500">{t('services')}</div>
+          <div onClick={() => router.push('/#about-section')} className="hover:text-blue-500">{t('about')}</div>
+          <div onClick={() => router.push('/#why-us-section')} className="hover:text-blue-500">{t('whyUs')}</div>
+          <div onClick={() => router.push('/#article-section')} className="hover:text-blue-500">{t('article')}</div>
+          <div onClick={() => router.push('/#contact-section')} className="hover:text-blue-500">{t('contact')}</div>
+
         </nav>
+
+        {/*ปุ่มเปลี่ยนภาษา*/}
+        
+        <button onClick={toggleLanguage} className="lg:flex px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">
+          <Languages>{t('toggleLang')}</Languages>
+        </button>
 
         {/* Mobile Menu Button */}
         <button
@@ -46,12 +83,13 @@ const Header = () => {
       {isOpen && (
         <div className="lg:hidden bg-white shadow-md">
           <nav className="flex flex-col items-center py-4 space-y-4">
-            <Link href="/#home-section" className="hover:text-blue-500" onClick={() => setIsOpen(false)}>Home</Link>
-            <Link href="/#services-section" className="hover:text-blue-500" onClick={() => setIsOpen(false)}>Services</Link>
-            <Link href="/#about-section" className="hover:text-blue-500" onClick={() => setIsOpen(false)}>About Us</Link>
-            <Link href="/#why-us-section" className="hover:text-blue-500" onClick={() => setIsOpen(false)}>Why Us</Link>
-            <Link href="/#article-section" className="hover:text-blue-500" onClick={() => setIsOpen(false)}>Articles</Link>
-            <Link href="/#contact-section" className="hover:text-blue-500" onClick={() => setIsOpen(false)}>Contact</Link>
+            <Link href="/#home-section" className="hover:text-blue-500" onClick={() => setIsOpen(false)}>{t('home')}</Link>
+            <Link href="/#services-section" className="hover:text-blue-500" onClick={() => setIsOpen(false)}>{t('services')}</Link>
+            <Link href="/#about-section" className="hover:text-blue-500" onClick={() => setIsOpen(false)}>{t('about')}</Link>
+            <Link href="/#why-us-section" className="hover:text-blue-500" onClick={() => setIsOpen(false)}>{t('whyUs')}</Link>
+            <Link href="/#article-section" className="hover:text-blue-500" onClick={() => setIsOpen(false)}>{t('articles')}</Link>
+            <Link href="/#contact-section" className="hover:text-blue-500" onClick={() => setIsOpen(false)}>{t('contact')}</Link>
+
           </nav>
         </div>
       )}

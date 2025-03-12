@@ -7,8 +7,19 @@ import About from "@/components/About";
 import WhyUs from "@/components/WhyUs";
 import SubServices from "@/components/SubServices";
 import SEO from "@/components/Seo";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])), // ✅ โหลด common.json ก่อน Render หน้า
+    },
+  };
+}
 
 export default function Home() {
+
+
   return (
     <>
       <SEO 
